@@ -2,4 +2,4 @@
 ## part-1 
 ---
 **initiative process**
-installing node packages, nodemon,express,mongoose 
+installing node packages, nodemon,express,mongoose and ejs
