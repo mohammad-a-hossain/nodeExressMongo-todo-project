@@ -3,37 +3,53 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bootstrap Site</title>
+  <title>node project practice-1</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
 </head>
 <body>
-<h2 class="text-center">CRUD PROJECT NODE EXPRESS EJS BOOTSTRAP MONGODB</h2>
+<h2 class="text-center">CRUD (todo) PROJECT NODE EXPRESS EJS BOOTSTRAP MONGODB</h2>
 
 <div class="container">
     <div class="my-4">
      <h3>creating new contact</h3>
-     <form action="/contact" method="POST" class="form-inline">
+     <form action="/contacts" method="POST" class="form-inline" id="my-form">
+        <div class="input-group mb-2 mr-sm-2">
         <label class="sr-only" for="inlineFormInputName2">Name</label>
-        <input type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Jane Doe">
-    
+        <div class="input-group-prepend ">
+            <div class="input-group-text">@</div>
+        </div>
+        <input type="text" name="name" class="form-control <%= error.name ? 'is-invalid':'' %> mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Jane Doe">
+        <div class="invalid-feedback">
+          <%= error.name %>
+        </div>
+    </div>
         <label class="sr-only" for="inlineFormInputGroupUsername2">email</label>
         <div class="input-group mb-2 mr-sm-2">
             <div class="input-group-prepend">
-                <div class="input-group-text">@</div>
+                <div class="input-group-text ">@</div>
             </div>
-            <input type="text" class="form-control" id="inlineFormInputGroupUsername2" placeholder="email">
+            <input type="text"   name="email" class="form-control <%= error.email ? 'is-invalid':'' %>" id="inlineFormInputGroupUsername2" placeholder="email">
+            <div class="invalid-feedback">
+                <%= error.email %>
+              </div>
         </div>
         <div class="input-group mb-2 mr-sm-2">
             <div class="input-group-prepend">
-                <div class="input-group-text">@</div>
+                <div class="input-group-text  ">@</div>
             </div>
-            <input type="text" class="form-control" id="inlineFormInputGroupUsername2" placeholder="phone number">
+            <input type="text" name="phone" class="<%= error.phone ? 'is-invalid':'' %>"  id="inlineFormInputGroupUsername2" placeholder="phone number">
+            <div class="invalid-feedback">
+                <%= error.phone %>
+              </div>
+        </div>
+        <div class="form-group mr-3">
+          <input type="hidden" name="id">
         </div>
     
     
-        <button type="submit" class="btn btn-primary mb-2">Submit</button>
+        <input type="submit" class="btn btn-primary mb-2" value="Submit"/>
     </form>
     </div>
     <div>
@@ -56,8 +72,17 @@
                     <th><%= contact.email %></th>
                     <th><%= contact.phone %></th>
                      <th>
-                                <button type="button" class="btn btn-primary">edit</button>
-                                <button type="button" class="btn btn-danger"><a href="/contact/delete/<%= contact._id %>">delete</a> </button>
+                         <button type="button" class="btn btn-primary edit-btn"
+                          data-name="<%= contact.name %>"
+                          data-email="<%= contact.email %>"
+                          data-phone="<%= contact.phone %>"
+                          data-id="<%= contact._id %>"
+                         >edit
+                        </button>
+
+                         <button type="button" class="btn btn-danger">
+                             <a href="/contacts/delete/<%= contact._id %>">delete</a> 
+                        </button>
                     </th>
                 </tr>
                 <% } %> 
@@ -66,6 +91,23 @@
     </div>
 
 </div>
+<script>
+    window.onload = function(){
+     let editBtn =document.getElementsByClassName('edit-btn')
+     let form =document.getElementById('my-form')
+       ;[...editBtn].forEach(btn =>{
+             btn.addEventListener('click',function(e){
+            // console.log(e.target.dataset)
+            let {name,email,phone,id} = e.target.dataset 
+            form[0].value = name 
+            form[1].value =email
+            form[2].value =phone 
+            form[3].value =id 
+            form[4].value ='update'
+       })
+    })
+    }
+</script>
 </body>
 </html>
 

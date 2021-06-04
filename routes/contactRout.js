@@ -12,7 +12,8 @@ router.post('/',createContact)
 router.get('/', getAllContact)
 router.get('/:id',getContactById)
 router.put('/:id',updateDAta)
-router.delete('/:id',deletingData)
+router.get('/delete/:id',deletingData)
+// router.delete('/:id',deletingData)
 
 
 

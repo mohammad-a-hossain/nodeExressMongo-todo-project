@@ -2,7 +2,7 @@ const express = require('express')
 const morgan = require('morgan')
 const mongoose = require('mongoose')
 const contactRoute =require('./routes/contactRout')
-const ejs =require('ejs')
+
 
 
 const app =express()
